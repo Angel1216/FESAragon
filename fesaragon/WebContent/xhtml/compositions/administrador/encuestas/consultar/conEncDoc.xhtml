@@ -1,0 +1,787 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina { height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+			.divCuestPregunta{ font-size: 14px }
+			.divCuestRespUnica{ font-size: 12px }
+			.divCuestRespMult{ font-size: 12px }
+			.divSeparator { width:870px }
+			.divSeparatorFinal { width:800px }
+		</style>
+	</h:head>
+      
+	<h:body>
+		<p:growl id="msgs" showDetail="true" sticky="true"/>		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+		
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+		    <p:outputLabel value="Descargando…"/>
+		</p:dialog>
+		
+		<h:form id="encDocForm" enctype="multipart/form-data">
+			<div id="idContent" align="center">
+				<div align="left" style="width: 968px">
+					
+					<div>
+						<h1></h1>
+			    	</div>
+					
+					<div align="center" class="divCuestPregunta" style="margin-bottom: 40px">    	
+						<h:outputLabel value="RESULTADOS DE ENCUESTAS DE DOCENTES" style="font-size: 30px;" />
+			    	</div>
+					
+					<div class="divCuestPregunta">    	
+				    	<h:panelGrid>
+					 		<p:outputLabel style="	font-size:15px" value="A continuación podrás observar de manera generalizada los resultados:"/>
+								<!--  <p:outputLabel style="font-weight:bold; font-size:15px" value="se solicita, apoyes con el llenado de la siguiente encuesta, la cual tendrá un carácter confidencial. Muchas gracias" />	-->
+						</h:panelGrid>
+			    	</div>
+			    	
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique">
+			    		<p:outputLabel style="font-size:15px;" value="Encuestas aplicadas" />
+			    	</div>
+			    	<div class="divCuestRespUnica" style="margin-top: 15px;">
+			    		<h:panelGrid columns="2" cellpadding="5">
+						        <p:outputLabel for="totalEncuesta" value="Total:"/>
+						        <p:inputText id="totalEncuesta" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getTotalEncuestas()}" style="width: 30px" disabled="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="1" cellpadding="5">
+							<p:outputLabel value="Aplicadas a:"/>
+						</h:panelGrid>
+						<h:panelGrid columns="4" cellpadding="5">
+						        <p:outputLabel for="masculino" value="Hombres:"/>
+						        <p:inputText id="masculino" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjSexo().getMasculino()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="femenino" value="Mujeres:"/>
+						        <p:inputText id="femenino" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjSexo().getFemenino()}" style="width: 30px" disabled="true"/>
+						</h:panelGrid>
+			    	</div>
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique">
+			    		<p:outputLabel style="font-size:15px;" value="Datos personales de los encuestados" />
+			    	</div>
+			        
+			        <div class="divCuestRespUnica" style="margin-top: 15px;">
+			        		<p:outputLabel value="Años de antigüedad"/>
+						    <h:panelGrid id="antiguedad" columns="8" cellpadding="5" >
+						        <p:outputLabel for="antiguedad_1" value="1-5 años:"/>
+						        <p:inputText id="antiguedad_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjAntiguedad().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="antiguedad_2" value="6-10 años:"/>
+						        <p:inputText id="antiguedad_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjAntiguedad().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="antiguedad_3" value="11-15 años:"/>
+						        <p:inputText id="antiguedad_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjAntiguedad().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="antiguedad_4" value="16 o más años:"/>
+						        <p:inputText id="antiguedad_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjAntiguedad().getCuatro()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+			    	</div>
+			        
+			        <h:panelGrid columns="1" cellpadding="5">
+						   	<p:commandLink id="clCarrera" update="msgs" onclick="PF('dlgCarrera').show();">
+								<h:outputText value="Carrera de formación" style="font-size:13px;"/>
+ 							</p:commandLink>
+					</h:panelGrid>
+									        
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique">
+			    		<p:outputLabel style="font-size:15px;" value="A continuación se enumera cada una de las respuestas englobando la totalidad de encuestas aplicadas:" />
+			    	</div>
+			        <div style="margin-top: 15px;">
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="1.- El estudiante presenta hábitos de estudio." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte1_1" value="Excelentes:"/>
+							        <p:inputText id="compte1_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte1().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte1_2" value="Buenos:"/>
+							        <p:inputText id="compte1_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte1().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte1_3" value="Escasos:"/>
+							        <p:inputText id="compte1_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte1().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte1_4" value="Deficientes:"/>
+							        <p:inputText id="compte1_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte1().getCuatro()}" style="width: 30px" disabled="true"/>
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte1Comen" update="msgs" onclick="PF('dlgCompte1Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="2.- El estudiante tiene habilidades para comprender lecturas." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte2_1" value="Excelentes:"/>
+							        <p:inputText id="compte2_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte2().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte2_2" value="Buenas:"/>
+							        <p:inputText id="compte2_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte2().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte2_3" value="Escasas:"/>
+							        <p:inputText id="compte2_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte2().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte2_4" value="Deficientes:"/>
+							        <p:inputText id="compte2_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte2().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte2Comen" update="msgs" onclick="PF('dlgCompte2Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="3.- El estudiante presenta habilidades cognitivas de mecanización y solución de algoritmos." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte3_1" value="Excelentes:"/>
+							        <p:inputText id="compte3_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte3().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte3_2" value="Buenas:"/>
+							        <p:inputText id="compte3_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte3().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte3_3" value="Escasas:"/>
+							        <p:inputText id="compte3_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte3().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte3_4" value="Deficientes:"/>
+							        <p:inputText id="compte3_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte3().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte3Comen" update="msgs" onclick="PF('dlgCompte3Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="4.- El estudiante muestra habilidades cognitivas de argumentación y validación de resultados." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte4_1" value="Excelentes:"/>
+							        <p:inputText id="compte4_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte4().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte4_2" value="Buenas:"/>
+							        <p:inputText id="compte4_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte4().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte4_3" value="Escasas:"/>
+							        <p:inputText id="compte4_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte4().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte4_4" value="Deficientes:"/>
+							        <p:inputText id="compte4_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte4().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte4Comen" update="msgs" onclick="PF('dlgCompte4Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="5.- El alumno muestra habilidades para interpretar y plantear problemas matemáticos." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte5_1" value="Excelentes:"/>
+							        <p:inputText id="compte5_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte5().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte5_2" value="Buenas:"/>
+							        <p:inputText id="compte5_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte5().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte5_3" value="Escasas:"/>
+							        <p:inputText id="compte5_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte5().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte5_4" value="Deficientes:"/>
+							        <p:inputText id="compte5_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte5().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte5Comen" update="msgs" onclick="PF('dlgCompte5Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="6.- El alumno presenta conocimiento de tecnologías de la información y comunicación (TIC)." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte6_1" value="Excelente:"/>
+							        <p:inputText id="compte6_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte6().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte6_2" value="Bueno:"/>
+							        <p:inputText id="compte6_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte6().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte6_3" value="Escaso:"/>
+							        <p:inputText id="compte6_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte6().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte6_4" value="Deficiente:"/>
+							        <p:inputText id="compte6_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte6().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte6Comen" update="msgs" onclick="PF('dlgCompte6Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="7.- En términos de educación matemática, la vinculación entre el Bachillerato y la Licenciatura es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte7_1" value="Excelente:"/>
+							        <p:inputText id="compte7_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte7().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte7_2" value="Buena:"/>
+							        <p:inputText id="compte7_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte7().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte7_3" value="Escasa:"/>
+							        <p:inputText id="compte7_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte7().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte7_4" value="Deficiente:"/>
+							        <p:inputText id="compte7_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte7().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte7Comen" update="msgs" onclick="PF('dlgCompte7Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="8.- La vinculación entre los programas de estudio de matemáticas de Bachillerato y Licenciatura es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte8_1" value="Excelente:"/>
+							        <p:inputText id="compte8_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte8().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte8_2" value="Buena:"/>
+							        <p:inputText id="compte8_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte8().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte8_3" value="Escasa:"/>
+							        <p:inputText id="compte8_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte8().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte8_4" value="Deficiente:"/>
+							        <p:inputText id="compte8_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte8().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte8Comen" update="msgs" onclick="PF('dlgCompte8Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="9.- La difusión de contribuciones y utilidad de las matemáticas en la sociedad es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte9_1" value="Excelente:"/>
+							        <p:inputText id="compte9_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte9().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte9_2" value="Buena:"/>
+							        <p:inputText id="compte9_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte9().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte9_3" value="Escasa:"/>
+							        <p:inputText id="compte9_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte9().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte9_4" value="Deficiente:"/>
+							        <p:inputText id="compte9_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte9().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte9Comen" update="msgs" onclick="PF('dlgCompte9Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="10.- La valoración social del académico que se dedica a hacer actividades relacionadas con matemáticas es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte10_1" value="Excelente:"/>
+							        <p:inputText id="compte10_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte10().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte10_2" value="Buena:"/>
+							        <p:inputText id="compte10_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte10().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte10_3" value="Escasa:"/>
+							        <p:inputText id="compte10_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte10().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte10_4" value="Deficiente:"/>
+							        <p:inputText id="compte10_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte10().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte10Comen" update="msgs" onclick="PF('dlgCompte10Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="11.- En general, el compromiso del estudiante ante su educación es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte11_1" value="Muy alto:"/>
+							        <p:inputText id="compte11_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte11().getUno()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()} -->
+							        <p:outputLabel for="compte11_2" value="Alto:"/>
+							        <p:inputText id="compte11_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte11().getDos()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()} -->
+							        <p:outputLabel for="compte11_3" value="Bajo:"/>
+							        <p:inputText id="compte11_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte11().getTres()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getTres()} -->
+							        <p:outputLabel for="compte11_4" value="Muy bajo:"/>
+							        <p:inputText id="compte11_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte11().getCuatro()}" style="width: 30px" disabled="true"/>	<!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getCuatro()} -->
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte11Comen" update="msgs" onclick="PF('dlgCompte11Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="12.- La motivación del estudiante por el estudio de las matemáticas es:" />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte12_1" value="Muy alto:"/>
+							        <p:inputText id="compte12_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte12().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte12_2" value="Alto:"/>
+							        <p:inputText id="compte12_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte12().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte12_3" value="Bajo:"/>
+							        <p:inputText id="compte12_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte12().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte12_4" value="Muy bajo:"/>
+							        <p:inputText id="compte12_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte12().getCuatro()}" style="width: 30px" disabled="true"/>
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte12Comen" update="msgs" onclick="PF('dlgCompte12Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="13.- El factor socioeconómico influye en el aprendizaje de las matemáticas." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte13_1" value="Muy alto:"/>
+							        <p:inputText id="compte13_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte13().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte13_2" value="Alto:"/>
+							        <p:inputText id="compte13_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte13().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte13_3" value="Bajo:"/>
+							        <p:inputText id="compte13_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte13().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte13_4" value="Muy bajo:"/>
+							        <p:inputText id="compte13_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte13().getCuatro()}" style="width: 30px" disabled="true"/>
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte13Comen" update="msgs" onclick="PF('dlgCompte13Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="14.- El estudiante sabe en qué otras materias se utilizan las matemáticas." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte14_1" value="Muy de acuerdo:"/>
+							        <p:inputText id="compte14_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte14().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte14_2" value="De acuerdo:"/>
+							        <p:inputText id="compte14_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte14().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte14_3" value="En desacuerdo:"/>
+							        <p:inputText id="compte14_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte14().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte14_4" value="Muy en desacuerdo:"/>
+							        <p:inputText id="compte14_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte14().getCuatro()}" style="width: 30px" disabled="true"/>
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte14Comen" update="msgs" onclick="PF('dlgCompte14Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					
+			        
+					<div class="divSeparator"><p:separator/></div>
+					
+					
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="15.- La equidad de género contribuye al desempeño en el área de las matemáticas." />
+						    </h:panelGrid>
+			    		</div>
+			 			<div class="divCuestRespUnica">
+							    <h:panelGrid columns="11" style="margin-bottom:10px" cellpadding="5">		    
+							        <p:outputLabel for="compte15_1" value="Muy de acuerdo:"/>
+							        <p:inputText id="compte15_1" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte15().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte15_2" value="De acuerdo:"/>
+							        <p:inputText id="compte15_2" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte15().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte15_3" value="En desacuerdo:"/>
+							        <p:inputText id="compte15_3" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte15().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte15_4" value="Muy en desacuerdo:"/>
+							        <p:inputText id="compte15_4" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjLlCompte15().getCuatro()}" style="width: 30px" disabled="true"/>
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="1" cellpadding="5">
+								   	<p:commandLink id="clCompte15Comen" update="msgs" onclick="PF('dlgCompte15Comen').show();">
+										<h:outputText value="Comentarios" style="font-size:13px;"/>
+		 							</p:commandLink>
+								</h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					 
+					
+				    <div align="center">
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    </div>
+				    
+				    <div align="center">
+				    		<p:commandButton id="btnExcel" ajax="false" value="Excel" actionListener="#{preEncuestaMaestrosMB.exportarExcel()}" icon="ui-icon-arrowthick-1-s" onclick="PrimeFaces.monitorDownload(start, stop);">
+								<p:fileDownload id="excelDownload" value="#{preEncuestaMaestrosMB.file}" />
+				    		</p:commandButton>
+				    </div>
+				    
+			        
+			        <!-- Dialogos -->
+			        <p:dialog header="Confirmación" widgetVar="dlgEnvEncuestaProfe" minHeight="40" width="500px" resizable="false" modal="true">
+		    		<div align="center">
+		    			<h:panelGrid>
+		    				<p:outputLabel value="¿Está seguro de enviar su encuesta?" />
+		    			</h:panelGrid>
+		    			<h:panelGrid>
+							<p:commandButton id="btnEnviar" value="Confirmar" update="msgs" icon="ui-icon-pencil" actionListener="#{encuestaMaestrosMB.llenarEncuestaMaestro}" disabled="#{encuestaMaestrosMB.banEnviar}"/>
+						</h:panelGrid>
+					</div>	    
+					</p:dialog>
+				
+			        <p:dialog header="Carrera de formación" widgetVar="dlgCarrera" minHeight="40" width="500px">
+					    <p:dataTable var="Carreras" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjCarreraFormacion().getLstCarreraFormacion()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{Carreras}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					<p:dialog header="Comentarios" widgetVar="dlgCompte1Comen" minHeight="40" width="500px">
+					    <p:dataTable var="compte1Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte1Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte1Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte2Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte2Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte2Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte2Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte3Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte3Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte3Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte3Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte4Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte4Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte4Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte4Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte5Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte5Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte5Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte5Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte6Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte6Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte6Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte6Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte7Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte7Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte7Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte7Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+			        <p:dialog header="Comentarios" widgetVar="dlgCompte8Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte8Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte8Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte8Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte9Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte9Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte9Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte9Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte10Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte10Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte10Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte10Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte11Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte11Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte11Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte11Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte12Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte12Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte12Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte12Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte13Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte13Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte13Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte13Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte14Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte14Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte14Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte14Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Comentarios" widgetVar="dlgCompte15Comen" minHeight="40" width="500px">
+					    <!-- gato{preEncuestaMaestrosMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte2().getLstOtrosCompte2()} -->
+					    <p:dataTable var="compte15Comen" value="#{preEncuestaMaestrosMB.lstEncuRespDocVer1Totales.get(0).getObjDsCompte15Coment().getLstCompteComent()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{compte15Comen}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+		    	</div>
+			</div>	
+		</h:form>
+		
+		<script type="text/javascript">
+			function start() {
+			    PF('statusDialog').show();
+			}
+			 
+			function stop() {
+			    PF('statusDialog').hide();
+			}
+		</script>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+		      
+	</h:body>
+</html>

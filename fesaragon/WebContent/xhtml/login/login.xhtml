@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+
+
+      <p:panel header="Login" style="width:300px">
+        <h:panelGrid columns="2" cellpadding="5">
+          <h:outputLabel for="username" value="Usuario:" />
+          <p:inputText id="username"
+             required="true" label="username" placeholder="Usuario" style="width:150px"/>
+          <h:outputLabel for="password" value="Clave:" />
+        <p:password id="password" required="true"
+           label="password" placeholder="Password" style="width:150px"/>
+        <f:facet name="footer">
+          <p:commandButton id="loginButton" style="margin-left:90px" value="Login" action="login"></p:commandButton>
+        </f:facet>
+      </h:panelGrid>
+    </p:panel>
+  
+
+
+
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina { height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+			.divCuestPregunta{ font-size: 14px}
+			.divCuestRespUnica{ font-size: 12px }
+			.divCuestRespMult{ font-size: 12px }
+			.divSeparator { width:870px }
+			.divSeparatorFinal { width:800px; }
+		</style>
+		<!-- .piePagina { height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+			.divCuestPregunta{ margin-left:250px; font-size: 14px;}
+			.divCuestRespUnica{ margin-left:250px; font-size: 12px }
+			.divCuestRespMult{ margin-left:300px; font-size: 12px }
+			.divSeparator { width:870px; margin-left:230px }
+			.divSeparatorFinal { width:800px; margin-left:270px } -->
+	</h:head>
+      
+	<h:body>
+		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+		
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+		    <p:outputLabel value="Descargando…"/>
+		</p:dialog>
+		
+		<h:form enctype="multipart/form-data">
+			<div align="center">
+				<div align="left" style="width: 968px">
+					<p:growl id="msgs" showDetail="true" sticky="true"/>
+					<div>
+						<h1></h1>
+			    	</div>
+					
+					<div align="center" class="divCuestPregunta" style="margin-bottom: 40px">    	
+						<h:outputLabel value="RESULTADOS DE ENCUESTAS DE ALUMNOS" style="font-size: 30px;" />
+			    	</div>
+					
+					<div class="divCuestPregunta">    	
+				    	<h:panelGrid>
+							<p:outputLabel style="font-size:15px" value="A continuación podrás observar de manera generalizada los resultados:"/>
+								<!--  <p:outputLabel style="font-weight:bold; font-size:15px" value="se solicita, apoyes con el llenado de la siguiente encuesta, la cual tendrá un carácter confidencial. Muchas gracias" />	-->
+						</h:panelGrid>
+						
+			    	</div>
+			    	
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique;">
+			    		<p:outputLabel style="font-size:15px;" value="Encuestas aplicadas" />
+			    	</div>
+			    	<div class="divCuestRespUnica" style="margin-top: 15px;">
+			    		<h:panelGrid columns="2" cellpadding="5">
+						        <p:outputLabel for="totalEncuesta" value="Total:"/>
+						        <p:inputText id="totalEncuesta" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getTotalEncuestas()}" style="width: 30px" disabled="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="1" cellpadding="5">
+							<p:outputLabel value="Aplicadas a:"/>
+						</h:panelGrid>
+						<h:panelGrid columns="4" cellpadding="5">
+						        <p:outputLabel for="masculino" value="Hombres:"/>
+						        <p:inputText id="masculino" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjSexo().getMasculino()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="femenino" value="Mujeres:"/>
+						        <p:inputText id="femenino" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjSexo().getFemenino()}" style="width: 30px" disabled="true"/>
+						</h:panelGrid>
+			    	</div>
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique;">
+			    		<p:outputLabel style="font-size:15px;" value="Datos personales de los encuestados" />
+			    	</div>
+					<div class="divCuestRespUnica" style="margin-top: 15px;">
+						<h:panelGrid columns="1" cellpadding="5">
+			   				<p:commandLink id="clSencudaria" update="msgs" onclick="PF('dlgSecundaria').show();">
+								<h:outputText value="Secundarias de procedencia" />
+ 							</p:commandLink>
+ 						</h:panelGrid>
+			        </div>
+			        
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			   			<h:panelGrid columns="1" cellpadding="5">
+						   	<p:commandLink id="clEdades" update="msgs" onclick="PF('dlgEdades').show();">
+								<h:outputText value="Edades" />
+ 							</p:commandLink>
+						</h:panelGrid>
+			   			
+<!--  			   			<h:panelGrid columns="1" cellpadding="5">
+			   				<h:outputText value="" />
+ 						</h:panelGrid>		-->
+ 						
+						<h:panelGrid columns="1" cellpadding="5">
+						   	<p:commandLink id="clAreasCarrera" update="msgs" onclick="PF('dlgAreasCarrera').show();">
+								<h:outputText value="Áreas o Carreras" />
+ 							</p:commandLink>
+						</h:panelGrid>
+			        </div>
+			        
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        
+			        	<h:panelGrid columns="1" cellpadding="5">
+						   	<p:commandLink id="clCicloEscolar" update="msgs" onclick="PF('dlgclCicloEscolar').show();">
+								<h:outputText value="Año escolar/Semestre" />
+ 							</p:commandLink>
+						</h:panelGrid>
+			        </div>
+			    	<div class="divCuestPregunta" style="margin-top: 40px; text-decoration: underline; font-style: oblique;">
+			    		<p:outputLabel style="font-size:15px;" value="A continuación se enumera cada una de las respuestas englobando la totalidad de encuestas aplicadas:" />
+			    	</div>
+			    	
+			    	
+																		<!-- INICIA ENCUESTA -->
+			    	<div>
+				    	<div class="divCuestPregunta" style="margin-top: 15px;">
+						    <h:panelGrid>
+						        <p:outputLabel value="1.- ¿Qué seguridad tienes de haber elegido el área/carrera adecuada?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    <h:panelGrid columns="10" cellpadding="5">
+						        <p:outputLabel for="compte1_1" value="Muy seguro:"/>
+						        <p:inputText id="compte1_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte1().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte1_2" value="Seguro:"/>
+						        <p:inputText id="compte1_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte1().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte1_3" value="No tan seguro:"/>
+						        <p:inputText id="compte1_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte1().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte1_4" value="Nada seguro:"/>
+						        <p:inputText id="compte1_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte1().getCuatro()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte1_5" value="Yo no quería esta área/carrera:"/>
+						        <p:inputText id="compte1_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte1().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="2.- ¿Has revisado los temarios de las materias de tu carrera?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 			<h:panelGrid columns="4" cellpadding="5">
+						        <p:outputLabel for="compte2_1" value="Si:"/>
+						        <p:inputText id="compte2_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte2_2" value="No (pasa a la pregunta 3):"/>
+						        <p:inputText id="compte2_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getDos()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+			
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="2a. ¿En qué porcentaje?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte2a_1" value="10-30%:"/>
+						        <p:inputText id="compte2a_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getObjllCompte2a().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte2a_2" value="31-50%:"/>
+						        <p:inputText id="compte2a_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getObjllCompte2a().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte2a_3" value="51-70%:"/>
+						        <p:inputText id="compte2a_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getObjllCompte2a().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte2a_4" value="70-100%:"/>
+						        <p:inputText id="compte2a_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte2().getObjllCompte2a().getCuatro()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="3.- Cuando no entiendes un tema de matemáticas, ¿A quién recurres o qué recursos empleas?" />
+						        <p:outputLabel value="(Puedes contestar más de una opción)" />
+						    </h:panelGrid>
+				    	</div>
+				    	
+				 		<div class="divCuestRespUnica">
+				 		
+				 			<h:panelGrid columns="10" cellpadding="5">
+						        <p:outputLabel for="compte3_1" value="Al profesor:"/>
+						        <p:inputText id="compte3_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte3_2" value="A un amigo:"/>
+						        <p:inputText id="compte3_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte3_3" value="A un libro:"/>
+						        <p:inputText id="compte3_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte3_4" value="Veo videos en Internet:"/>
+						        <p:inputText id="compte3_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getCuatro()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte3_5" value="No hago nada:"/>
+						        <p:inputText id="compte3_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				 		
+			        			<div class="divCuestRespUnica" style="margin-top: 20px;">
+									<h:panelGrid columns="1" cellpadding="5">
+						   				<p:commandLink id="clComponente3checkOtro" update="msgs" onclick="PF('dlgComponente3checkOtro').show();">
+											<h:outputText value="Otras Respuestas" />
+			 							</p:commandLink>
+			 						</h:panelGrid>
+						        </div>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="4.- ¿Te es difícil plantear y resolver problemas de forma matemática?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 		
+					 		<h:panelGrid columns="4" cellpadding="5">
+							        <p:outputLabel for="compte4_1" value="No se me dificulta:"/>
+							        <p:inputText id="compte4_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte4().getUno()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte4_2" value="Se me dificulta plantear el problema:"/>
+							        <p:inputText id="compte4_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte4().getDos()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte4_3" value="Se me dificulta resolver el problema:"/>
+							        <p:inputText id="compte4_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte4().getTres()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte4_4" value="Se me dificulta entender lo que se me pide:"/>
+							        <p:inputText id="compte4_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte4().getCuatro()}" style="width: 30px" disabled="true"/>
+							        <p:outputLabel for="compte4_5" value="Se me dificulta todo:"/>
+							        <p:inputText id="compte4_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte4().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="5.- ¿Algunas vez has reprobado una materia de matemáticas durante el bachillerato/ la licenciatura?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 			<h:panelGrid columns="6" cellpadding="5">
+						        <p:outputLabel for="compte5_1" value="1 vez:"/>
+						        <p:inputText id="compte5_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte5().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte5_2" value="Más de una vez:"/>
+						        <p:inputText id="compte5_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte5().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte5_3" value="Ninguna (pasa a la pregunta 7):"/>
+						        <p:inputText id="compte5_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte5().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				     <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="6.- En un año/semestre, ¿Cuánto ha sido el mayor número de materias de matemáticas que reprobaste?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 			
+							<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte6_1" value="2 materias:"/>
+						        <p:inputText id="compte6_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte6().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte6_2" value="3 materias:"/>
+						        <p:inputText id="compte6_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte6().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte6_3" value="4 materias:"/>
+						        <p:inputText id="compte6_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte6().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte6_4" value="Ninguna:"/>
+						        <p:inputText id="compte6_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte6().getCuatro()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				      <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="7.- Consideras que tus conocimientos en matemáticas son:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">				 		
+				 			<h:panelGrid columns="10" cellpadding="5">
+						        <p:outputLabel for="compte7_1" value="Excelentes:"/>
+						        <p:inputText id="compte7_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte7().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte7_2" value="Buenos:"/>
+						        <p:inputText id="compte7_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte7().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte7_3" value="Suficientes:"/>
+						        <p:inputText id="compte7_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte7().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte7_4" value="Escasos:"/>
+						        <p:inputText id="compte7_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte7().getCuatro()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte7_5" value="Deficientes:"/>
+						        <p:inputText id="compte7_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte7().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				     <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="8.- Consideras que lo que has aprendido de matemáticas es" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    <h:panelGrid columns="10" cellpadding="5">
+						        <p:outputLabel for="compte8_1" value="Muy útil:"/>
+						        <p:inputText id="compte8_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte8().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte8_2" value="Útil:"/>
+						        <p:inputText id="compte8_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte8().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte8_3" value="Poco útil:"/>
+						        <p:inputText id="compte8_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte8().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte8_4" value="Nada útil:"/>
+						        <p:inputText id="compte8_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte8().getCuatro()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte8_5" value="No sé:"/>
+						        <p:inputText id="compte8_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte8().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="9.- ¿Cuánto tiempo le dedicas al estudio de las matemáticas a la semana?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 		
+				 			<h:panelGrid columns="10" cellpadding="5">
+						        <p:outputLabel for="compte9_1" value="½ hora – 1 hora:"/>
+						        <p:inputText id="compte9_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte9().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte9_2" value="1 – 2 horas:"/>
+						        <p:inputText id="compte9_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte9().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte9_3" value="2 o más horas:"/>
+						        <p:inputText id="compte9_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte9().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte9_4" value="Solo cuando hago tarea:"/>
+						        <p:inputText id="compte9_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte9().getCuatro()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte9_5" value="Nada:"/>
+						        <p:inputText id="compte9_5" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte9().getCinco()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>	
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel style="font-style: italic; font-size:14px" value="''El pensamiento matemático es un estado de actividad intelectual que surge de procesos racionales, abstracciones y" />
+						        <p:outputLabel style="font-style: italic; font-size:14px" value="conceptualizaciones, para resolver problemas en diversos ámbitos de la vida, a través del análisis de conceptos" />
+						        <p:outputLabel style="font-style: italic; font-size:14px" value="y su relación, la formulación de objetivos, hipótesis y la elaboración de predicciones, y la decisión de elegir métodos " />
+						        <p:outputLabel style="font-style: italic; font-size:14px" value="para alcanzar resultados.''" />
+						    </h:panelGrid>
+				        </div>
+				    </div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="10.- ¿Cómo consideras tu nivel de pensamiento lógico – matemático?" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte10_1" value="Alto:"/>
+						        <p:inputText id="compte10_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte10().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte10_2" value="Bueno:"/>
+						        <p:inputText id="compte10_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte10().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte10_3" value="Regular:"/>
+						        <p:inputText id="compte10_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte10().getTres()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte10_4" value="Bajo:"/>
+						        <p:inputText id="compte10_4" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte10().getCuatro()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="11.- De los siguientes programas y lenguajes, ¿cuáles conoces y manejas?" />
+						    </h:panelGrid>
+				        </div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Geogebra" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11a_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11a_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11a().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11a_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11a_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11a().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11a_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11a_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11a().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+			
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Maple" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11b_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11b_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11b().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11b_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11b_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11b().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11b_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11b_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11b().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+			
+				     <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Mathematica" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11c_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11c_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11c().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11c_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11c_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11c().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11c_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11c_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11c().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				     <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Geo sketchup" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11d_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11d_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11d().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11d_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11d_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11d().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11d_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11d_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11d().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="SPSS" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11e_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11e_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11e().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11e_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11e_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11e().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11e_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11e_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11e().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="R" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11f_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11f_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11f().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11f_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11f_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11f().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11f_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11f_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11f().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Matlab" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11g_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11g_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11g().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11g_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11g_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11g().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11g_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11g_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11g().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Excel" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11h_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11h_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11h().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11h_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11h_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11h().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11h_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11h_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11h().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Geup" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11i_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11i_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11i().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11i_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11i_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11i().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11i_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11i_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11i().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Derive 5.0" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11j_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11j_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11j().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11j_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11j_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11j().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11j_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11j_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11j().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				     <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Wiris" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11k_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11k_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11k().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11k_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11k_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11k().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11k_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11k_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11k().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="WinMat" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11l_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11l_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11l().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11l_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11l_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11l().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11l_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11l_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11l().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				     <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="WinPlot" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte11m_1" value="Lo conozco y manejo:"/>
+						        <p:inputText id="compte11m_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11m().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11m_2" value="Solo lo conozco:"/>
+						        <p:inputText id="compte11m_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11m().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte11m_3" value="No lo conozco:"/>
+						        <p:inputText id="compte11m_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjllCompte11m().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+				    		<h:panelGrid columns="1" cellpadding="5">
+				   				<p:commandLink id="clComponente11Otro" update="msgs" onclick="PF('dlgclComponente11Otro').show();">
+									<h:outputText value="Otras Respuestas" />
+	 							</p:commandLink>
+			 				</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+				    <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="12.-¿Qué tan útil consideras el pensamiento matemático para una profesión no afín a las Ciencias Físico-Matemáticas?" />
+						    </h:panelGrid>
+				        </div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Director de una Orquesta" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+				 			<h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte12a_1" value="Muy útil:"/>
+						        <p:inputText id="compte12a_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12a().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12a_2" value="Útil:"/>
+						        <p:inputText id="compte12a_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12a().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12a_3" value="Nada útil:"/>
+						        <p:inputText id="compte12a_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12a().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Diseñador Gráfico / Pintor" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte12b_1" value="Muy útil:"/>
+						        <p:inputText id="compte12b_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12b().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12b_2" value="Útil:"/>
+						        <p:inputText id="compte12b_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12b().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12b_3" value="Nada útil:"/>
+						        <p:inputText id="compte12b_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12b().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Laboratorista Médico / Médico" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte12c_1" value="Muy útil:"/>
+						        <p:inputText id="compte12c_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12c().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12c_2" value="Útil:"/>
+						        <p:inputText id="compte12c_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12c().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12c_3" value="Nada útil:"/>
+						        <p:inputText id="compte12c_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12c().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Administrador de una empresa" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte12d_1" value="Muy útil:"/>
+						        <p:inputText id="compte12d_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12d().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12d_2" value="Útil:"/>
+						        <p:inputText id="compte12d_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12d().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12d_3" value="Nada útil:"/>
+						        <p:inputText id="compte12d_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12d().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+				    <div>
+				    	<div class="divCuestRespMult">
+						    <h:panelGrid>
+						        <p:outputLabel value="Maestro de Lenguas Extranjeras" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespMult">
+						    <h:panelGrid columns="8" cellpadding="5">
+						        <p:outputLabel for="compte12e_1" value="Muy útil:"/>
+						        <p:inputText id="compte12e_1" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12e().getUno()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12e_2" value="Útil:"/>
+						        <p:inputText id="compte12e_2" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12e().getDos()}" style="width: 30px" disabled="true"/>
+						        <p:outputLabel for="compte12e_3" value="Nada útil:"/>
+						        <p:inputText id="compte12e_3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte12().getObjllCompte12e().getTres()}" style="width: 30px" disabled="true"/>
+							</h:panelGrid>
+				    	</div>
+				    </div>
+			
+					<div align="center">
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    </div>
+				    <div align="center">  <!-- style="margin-left: 640px" -->
+				    		<p:commandButton id="btnEnviar" ajax="false" value="Excel" actionListener="#{consultarEncuestasMB.exportarExcel()}" icon="ui-icon-arrowthick-1-s" onclick="PrimeFaces.monitorDownload(start, stop);">
+								<p:fileDownload id="excelDownload" value="#{consultarEncuestasMB.file}" />
+				    		</p:commandButton>
+				    </div>
+				    
+				    
+				    	<p:dialog header="Secundarias" widgetVar="dlgSecundaria" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="secundarias" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjSecuProc().getLstNombreSecundaria()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{secundarias}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Edades" widgetVar="dlgEdades" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="Edades" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjEdad().getLstEdades()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{Edades}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Áreas o Carreras" widgetVar="dlgAreasCarrera" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="AreasCarreras" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjAreaCarrera().getLstAreasCarreras()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{AreasCarreras}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Año escolar/Semestre" widgetVar="dlgclCicloEscolar" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="Semestre" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjAnioSemestre().getLstSemestres()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{Semestre}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Otras" widgetVar="dlgComponente3checkOtro" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="otraCompte3" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjdsCompte3().getLstOtrosCompte3()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{otraCompte3}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+					
+					<p:dialog header="Otras" widgetVar="dlgclComponente11Otro" minHeight="40" width="500px">
+					    <!--   <h:outputText value="Areas" />	-->
+					    <p:dataTable var="otraCompte11" value="#{consultarEncuestasMB.lstEncuRespAlumVer1Totales.get(0).getObjllCompte11().getObjOtro().getObjOtroCompte11()}"
+					    				paginator="true" rowsPerPageTemplate="5,10,15"
+					    				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					    				>
+					 	   <p:column headerText="">
+					 	       <h:outputText value="#{otraCompte11}" />
+					 	   </p:column>
+					 
+						</p:dataTable>
+					</p:dialog>
+							    
+				    
+		    	</div>
+		    </div>
+		
+		</h:form>
+		
+		<script type="text/javascript">
+			function start() {
+			    PF('statusDialog').show();
+			}
+			 
+			function stop() {
+			    PF('statusDialog').hide();
+			}
+		</script>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+		      
+	</h:body>
+</html>

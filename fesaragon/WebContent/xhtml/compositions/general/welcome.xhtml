@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	-->
+		<!--<h:outputStylesheet library="css" name="style.css"  />					-->
+		<!--<h:link href="/css/style.css" rel="stylesheet" type="text/css"/>		-->
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina{ height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+		</style>
+	</h:head>
+      
+	<h:body update="ffg">
+		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+
+		<h:form>			
+      		<div id="divContenido" align="center">
+				<div id="textWelcome">	
+					<table>	<!-- margin-left:580px -->
+						<tr><td align="center">&nbsp;</td></tr>
+					</table>
+					<table>	<!-- margin-left:580px -->
+						<tr><td align="center"><h:outputLabel value="¡Bienvenidos a la encuesta 2016!" style="font-size: 40px;" /></td></tr>
+					</table>
+					<table style="margin-top: 70px">	<!-- margin-left:580px -->
+						<tr><td align="center"><h:outputLabel value="#{welcomeMB.aniversario}" style="font-size: 30px;"/></td></tr>
+						<tr><td align="center"><h:outputLabel value="FES ARAGÓN UNAM" style="font-size: 40px;" /></td></tr>
+						<tr><td align="center"><h:outputLabel value="1976 - 2016" style="font-size: 30px;" /></td></tr>			
+					</table>
+				</div>
+				<div id="corousel">		<!-- style="margin-top: 50px" -->
+					<p:lightBox styleClass="imagebox" id="lighbox1">  
+					    <h:outputLink value="../../../images/galery/40Aniversario.png" title="40 Aniversario - FES ARAGÓN">  
+					        <h:graphicImage value="/images/galery/40Aniversario.png" id="nature1" style="height: 77px; width: 100px" />  
+					    </h:outputLink>
+					 
+					    <h:outputLink value="../../../images/galery/educDistancia.jpg" title="40 Aniversario - FES ARAGÓN">
+					        <h:graphicImage value="/images/galery/educDistancia.jpg" id="nature2" style="height: 77px; width: 100px" />  
+					    </h:outputLink>
+					</p:lightBox>
+				</div>
+			</div>
+		</h:form>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+		      
+	</h:body>
+</html>

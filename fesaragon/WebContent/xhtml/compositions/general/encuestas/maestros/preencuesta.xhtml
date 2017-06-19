@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina{ height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px;}
+		</style>		
+	</h:head>
+      
+	<h:body>
+		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+		
+		<h:form id="preencuesta" enctype="multipart/form-data">
+		
+			<p:growl id="msgs" showDetail="true" />
+
+			<div align="center" style="margin-bottom:25px;">	
+					<table>	<!-- margin-left:580px -->
+						<tr><td align="center">&nbsp;</td></tr>
+					</table>
+					<table>	<!-- margin-left:580px -->
+						<tr><td align="center"><h:outputLabel value="¡Bienvenido profesor!" style="font-size: 40px;" /></td></tr>
+					</table>
+					
+			</div>
+				
+			<div align="center" style="margin-bottom:25px;">
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel style="font-weight:bold; font-size:20px" value="Consulta las encuestas de profesores" />
+				</h:panelGrid>
+			</div>	
+			
+			<div align="center">
+				<h:panelGrid columns="2" cellpadding="5">
+		            <h:outputLabel for="username" value="Username:" />
+		            <p:inputText id="username" value="#{preEncuestaMaestrosMB.username}" label="username" />
+		 
+		            <h:outputLabel for="password" value="Password:" />
+		            <p:password id="password" value="#{preEncuestaMaestrosMB.password}" label="password" />	
+		        </h:panelGrid>
+		    </div>
+		    
+	        <div id="divDialog" align="center">
+	        <h:panelGrid columns="1" cellpadding="5">
+	            <f:facet name="footer">
+	                <p:commandButton value="Consultar encuestas" update="msgs" actionListener="#{preEncuestaMaestrosMB.login}" icon="ui-icon-contact" style="font-size:small" />
+	            </f:facet>
+		    </h:panelGrid>
+	        </div>
+			
+			
+			
+			
+			<div align="center" style="margin-bottom:25px; margin-top:25px;">
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel style="font-weight:bold; font-size:20px" value="&oacute;" />
+				</h:panelGrid>
+			</div>
+			
+			
+			<div align="center" style="margin-bottom:25px;">
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel style="font-weight:bold; font-size:20px" value="Ingresa los siguientes datos para iniciar con la encuesta" />
+				</h:panelGrid>
+			</div>
+			
+      		<div align="center">
+				<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="boleta" value="No. trabajador UNAM:" />
+        		<p:inputMask id="boleta" value="#{preEncuestaMaestrosMB.cuenta}" style="width:193px;" maxlength="7">
+        			<p:keyFilter regEx="/[1234567890]/i"/>
+        		</p:inputMask>
+					<p:outputLabel for="nivel" value="Nivel: " />
+		            <p:selectOneMenu id="nivel" value="#{preEncuestaMaestrosMB.nivel}" style="width:200px">
+		                <p:ajax listener="#{preEncuestaMaestrosMB.onNivelChange}" update="campus" />
+		                <f:selectItem itemLabel="Seleccionar nivel" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{preEncuestaMaestrosMB.mpCatalogoNivel}" />
+		            </p:selectOneMenu>
+		            
+		            <p:outputLabel for="campus" value="Campus: " />
+		            <p:selectOneMenu id="campus" value="#{preEncuestaMaestrosMB.campus}" style="width:200px">    
+		                <f:selectItem itemLabel="Seleccionar campus" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{preEncuestaMaestrosMB.mpCatalogoCampus}" />
+		            </p:selectOneMenu>
+		            
+				</h:panelGrid>
+					
+			</div>
+			
+			<div align="center">
+				<h:panelGrid columns="2">
+					<p:commandButton value="Llenar encuesta" update="msgs" actionListener="#{preEncuestaMaestrosMB.llenarEncuesta}" icon="ui-icon-pencil" style="font-size:small"/>
+				</h:panelGrid>
+			</div>
+		</h:form>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+		      
+	</h:body>
+</html>

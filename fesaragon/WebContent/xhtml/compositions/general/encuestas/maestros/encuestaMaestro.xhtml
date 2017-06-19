@@ -1,0 +1,722 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina { height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+			.divCuestPregunta{ font-size: 14px }
+			.divCuestRespUnica{ font-size: 12px }
+			.divCuestRespMult{ font-size: 12px }
+			.divSeparator { width:870px }
+			.divSeparatorFinal { width:800px }
+		</style>
+	</h:head>
+      
+	<h:body>
+		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+		
+		<h:form>
+			<div align="center">
+				<div align="left" style="width: 968px">
+					<p:growl id="msgs" showDetail="true" sticky="true"/>
+					<div>
+						<h1></h1>
+			    	</div>
+			    	
+			    	<div align="center" class="divCuestPregunta" style="margin-bottom: 40px">    	
+						<h:outputLabel value="ENCUESTA DE DOCENTE" style="font-size: 30px; font-weight:bold;" />
+			    	</div>
+					
+					<div class="divCuestPregunta">    	
+				    	<h:panelGrid>
+							<p:outputLabel style="font-weight:bold; font-size:15px" value="Con el propósito de coadyuvar a un proceso relacionado con matemáticas y a procesos de re-acreditación se presenta" />
+							<p:outputLabel style="font-weight:bold; font-size:15px" value="el siguiente cuestionario, para conocer  su percepción general de la educación matemática entre el bachillerato y la" />
+							<p:outputLabel style="font-weight:bold; font-size:15px" value="licenciatura en la UNAM. La información proporcionada se manejará en forma confidencial. Gracias" />
+							<p:outputLabel style="font-weight:bold; font-size:15px" value="¡Muchas Gracias!" />
+						</h:panelGrid>
+			    	</div>
+			    	
+					<div class="divCuestPregunta" style="margin-top: 20px; text-decoration: underline; font-weight:bold;">
+			    		<p:outputLabel style="font-size:15px;" value="Datos Personales" />
+			    	</div>
+
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			   			<h:panelGrid columns="1" cellpadding="5">
+						        <p:outputLabel for="antiguedad" value="Años de antigüedad:"/>
+						        <p:selectOneRadio id="antiguedad" value="#{encuestaMaestrosMB.antiguedad}">
+						            <f:selectItem itemLabel="1-5 años" itemValue="1" />
+						            <f:selectItem itemLabel="6-10 años" itemValue="2" />
+						            <f:selectItem itemLabel="11-15 años" itemValue="3" />
+						            <f:selectItem itemLabel="16 o más años" itemValue="4" />
+						        </p:selectOneRadio>
+						</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			   			<h:panelGrid columns="1" cellpadding="5">
+						        <p:outputLabel for="sexo" value="Sexo:"/>
+						        <p:selectOneRadio id="sexo" value="#{encuestaMaestrosMB.sexo}">
+						            <f:selectItem itemLabel="Femenino" itemValue="1" />
+						            <f:selectItem itemLabel="Masculino" itemValue="2" />
+						        </p:selectOneRadio>
+						</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5">
+			   					<p:outputLabel for="carreraFormacion" value="Carrera de formación:"/>
+			   					<p:inputMask id="carreraFormacion" value="#{encuestaMaestrosMB.carreraFormacion}" style="width:193px;" maxlength="50">
+			   						<p:keyFilter regEx="/[a-z0-9. ]/i"/>		    
+			   					</p:inputMask>
+						</h:panelGrid>
+			        </div>
+			        
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5">
+			   					<p:outputLabel for="carrerasImparteAsigProfe" value="Carrera(s)/Área(s) donde imparte asignaturas:" />
+			   					<p:selectManyMenu id="carrerasImparteAsigProfe" value="#{encuestaMaestrosMB.carrerasImparteAsigProfe}" style="width:200px">    
+					                <f:selectItem itemLabel="" itemValue="" noSelectionOption="true" />
+		    			            <f:selectItems value="#{encuestaMaestrosMB.mpCatalogoEntidad}" />
+			        		    </p:selectManyMenu>
+			        		    <p:outputLabel style="color: red; font-size:11px" value="*Nota: Para seleccionar más de una carrera/área (Ctrl + Clic)" />
+						</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			   			<h:panelGrid columns="1" cellpadding="5">
+						        <p:outputLabel value="Grado académico. Indique su último grado académico." style="font-weight:bold;"/>
+						</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5" layout="grid">
+			   					<p:outputLabel value="Licenciatura en:" />
+					</h:panelGrid>
+			        </div>
+					<div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="3" cellpadding="5" layout="grid">
+			   					<p:inputMask id="licenciatura" value="#{encuestaMaestrosMB.licenciatura}" style="width:193px;" maxlength="50">
+			   						<p:keyFilter regEx="/[a-z0-9. ]/i"/>		    
+			   					</p:inputMask>
+			   					<p:outputLabel for="fechaTitulacionLic" value="Fecha titulación:" />
+			   					<p:calendar id="fechaTitulacionLic" 
+			   								value="#{encuestaMaestrosMB.fechaTitulacionLic}" 
+			   								showOn="button" 
+			   								pattern="dd/MM/yyyy" 
+			   								mask="true" 
+			   								locale="es"
+			   								navigator="true"
+			   								yearRange="c-100:c+0"/>	
+					</h:panelGrid>
+			        </div>
+					<div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5" layout="grid">
+			   					<p:outputLabel value="Especialidad en:" />
+					</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="3" cellpadding="5" layout="grid">
+			   					<p:inputMask id="especialidad" value="#{encuestaMaestrosMB.especialidad}" style="width:193px;" maxlength="50">
+			   						<p:keyFilter regEx="/[a-z0-9. ]/i"/>		    
+			   					</p:inputMask>
+			   					<p:outputLabel for="fechaTitulacionEsp" value="Fecha titulación:" />
+			   					<p:calendar id="fechaTitulacionEsp" 
+			   								value="#{encuestaMaestrosMB.fechaTitulacionEsp}" 
+			   								showOn="button" 
+			   								pattern="dd/MM/yyyy" 
+			   								mask="true" 
+			   								locale="es"
+			   								navigator="true"
+			   								yearRange="c-100:c+0"/>	
+						</h:panelGrid>
+			        </div>
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5" layout="grid">
+			   					<p:outputLabel value="Maestría en:" />
+					</h:panelGrid>
+			        </div>
+					<div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="3" cellpadding="5" layout="grid">
+			   					<p:inputMask id="maestria" value="#{encuestaMaestrosMB.maestria}" style="width:193px;" maxlength="50">
+			   						<p:keyFilter regEx="/[a-z0-9. ]/i"/>		    
+			   					</p:inputMask>
+			   					<p:outputLabel for="fechaTitulacionMaestria" value="Fecha titulación:" />
+			   					<p:calendar id="fechaTitulacionMaestria" 
+			   								value="#{encuestaMaestrosMB.fechaTitulacionMaestria}" 
+			   								showOn="button" 
+			   								pattern="dd/MM/yyyy" 
+			   								mask="true" 
+			   								locale="es"
+			   								navigator="true"
+			   								yearRange="c-100:c+0"/>	
+					</h:panelGrid>
+			        </div>
+			        
+			        
+			        
+			        
+			        <div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="1" cellpadding="5" layout="grid">
+			   					<p:outputLabel value="Doctorado en:" />
+						</h:panelGrid>
+			        </div>
+					<div class="divCuestRespUnica" style="margin-top: 1px;">
+			        	<h:panelGrid columns="3" cellpadding="5" layout="grid">
+			   					<p:inputMask id="doctorado" value="#{encuestaMaestrosMB.doctorado}" style="width:193px;" maxlength="50">
+			   						<p:keyFilter regEx="/[a-z0-9. ]/i"/>		    
+			   					</p:inputMask>
+			   					<p:outputLabel for="fechaTitulacionDoc" value="Fecha titulación:" />
+			   					<p:calendar id="fechaTitulacionDoc" 
+			   								value="#{encuestaMaestrosMB.fechaTitulacionDoc}" 
+			   								showOn="button" 
+			   								pattern="dd/MM/yyyy" 
+			   								mask="true" 
+			   								locale="es"
+			   								navigator="true"
+			   								yearRange="c-100:c+0"/>	
+						</h:panelGrid>
+			        </div>
+			        
+			    	<div class="divCuestPregunta" style="margin-top: 20px; margin-bottom: 20px; text-decoration: underline; font-weight:bold;">
+			    		<p:outputLabel style="font-size:15px;" value="Instrucciones: Responda lo siguiente eligiendo la opción que sea más adecuada para usted." />
+			    	</div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="1.- El estudiante presenta hábitos de estudio." />
+						    </h:panelGrid>
+				    	</div>
+			 		<div class="divCuestRespUnica">
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente1" value="" />
+							        <p:selectOneRadio id="componente1" value="#{encuestaMaestrosMB.componente1}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelentes" itemValue="1"/>
+							            <f:selectItem itemLabel="Buenos" itemValue="2" />
+							            <f:selectItem itemLabel="Escasos" itemValue="3" />
+							            <f:selectItem itemLabel="Deficientes" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente1Comen" value="" />
+				        			<p:inputTextarea id="componente1Comen" value="#{encuestaMaestrosMB.componente1Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>		    
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+				    <div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="2.- El estudiante tiene habilidades para comprender lecturas." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente2" value="" />
+							        <p:selectOneRadio id="componente2" value="#{encuestaMaestrosMB.componente2}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelentes" itemValue="1"/>
+							            <f:selectItem itemLabel="Buenas" itemValue="2" />
+							            <f:selectItem itemLabel="Escasas" itemValue="3" />
+							            <f:selectItem itemLabel="Deficientes" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente2Comen" value="" />
+				        			<p:inputTextarea id="componente2Comen" value="#{encuestaMaestrosMB.componente2Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="3.- El estudiante presenta habilidades cognitivas de mecanización y solución de algoritmos." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente3" value="" />
+							        <p:selectOneRadio id="componente3" value="#{encuestaMaestrosMB.componente3}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelentes" itemValue="1"/>
+							            <f:selectItem itemLabel="Buenas" itemValue="2" />
+							            <f:selectItem itemLabel="Escasas" itemValue="3" />
+							            <f:selectItem itemLabel="Deficientes" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente3Comen" value="" />
+				        			<p:inputTextarea id="componente3Comen" value="#{encuestaMaestrosMB.componente3Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					
+					
+					
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="4.- El estudiante muestra habilidades cognitivas de argumentación y validación de resultados." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente4" value="" />
+							        <p:selectOneRadio id="componente4" value="#{encuestaMaestrosMB.componente4}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelentes" itemValue="1"/>
+							            <f:selectItem itemLabel="Buenas" itemValue="2" />
+							            <f:selectItem itemLabel="Escasas" itemValue="3" />
+							            <f:selectItem itemLabel="Deficientes" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente4Comen" value="" />
+				        			<p:inputTextarea id="componente4Comen" value="#{encuestaMaestrosMB.componente4Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="5.- El alumno muestra habilidades para interpretar y plantear problemas matemáticos." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente5" value="" />
+							        <p:selectOneRadio id="componente5" value="#{encuestaMaestrosMB.componente5}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelentes" itemValue="1"/>
+							            <f:selectItem itemLabel="Buenas" itemValue="2" />
+							            <f:selectItem itemLabel="Escasas" itemValue="3" />
+							            <f:selectItem itemLabel="Deficientes" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente5Comen" value="" />
+				        			<p:inputTextarea id="componente5Comen" value="#{encuestaMaestrosMB.componente5Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="6.- El alumno presenta conocimiento de tecnologías de la información y comunicación (TIC)." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente6" value="" />
+							        <p:selectOneRadio id="componente6" value="#{encuestaMaestrosMB.componente6}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelente" itemValue="1"/>
+							            <f:selectItem itemLabel="Bueno" itemValue="2" />
+							            <f:selectItem itemLabel="Escaso" itemValue="3" />
+							            <f:selectItem itemLabel="Deficiente" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente6Comen" value="" />
+				        			<p:inputTextarea id="componente6Comen" value="#{encuestaMaestrosMB.componente6Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="7.- En términos de educación matemática, la vinculación entre el Bachillerato y la Licenciatura es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente7" value="" />
+							        <p:selectOneRadio id="componente7" value="#{encuestaMaestrosMB.componente7}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelente" itemValue="1"/>
+							            <f:selectItem itemLabel="Buena" itemValue="2" />
+							            <f:selectItem itemLabel="Escasa" itemValue="3" />
+							            <f:selectItem itemLabel="Deficiente" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente7Comen" value="" />
+				        			<p:inputTextarea id="componente7Comen" value="#{encuestaMaestrosMB.componente7Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="8.- La vinculación entre los programas de estudio de matemáticas de Bachillerato y Licenciatura es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente8" value="" />
+							        <p:selectOneRadio id="componente8" value="#{encuestaMaestrosMB.componente8}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelente" itemValue="1"/>
+							            <f:selectItem itemLabel="Buena" itemValue="2" />
+							            <f:selectItem itemLabel="Escasa" itemValue="3" />
+							            <f:selectItem itemLabel="Deficiente" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente8Comen" value="" />
+				        			<p:inputTextarea id="componente8Comen" value="#{encuestaMaestrosMB.componente8Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="9.- La difusión de contribuciones y utilidad de las matemáticas en la sociedad es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente9" value="" />
+							        <p:selectOneRadio id="componente9" value="#{encuestaMaestrosMB.componente9}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelente" itemValue="1"/>
+							            <f:selectItem itemLabel="Buena" itemValue="2" />
+							            <f:selectItem itemLabel="Escasa" itemValue="3" />
+							            <f:selectItem itemLabel="Deficiente" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente9Comen" value="" />
+				        			<p:inputTextarea id="componente9Comen" value="#{encuestaMaestrosMB.componente9Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="10.- La valoración social del académico que se dedica a hacer actividades relacionadas con matemáticas es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente10" value="" />
+							        <p:selectOneRadio id="componente10" value="#{encuestaMaestrosMB.componente10}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Excelente" itemValue="1"/>
+							            <f:selectItem itemLabel="Buena" itemValue="2" />
+							            <f:selectItem itemLabel="Escasa" itemValue="3" />
+							            <f:selectItem itemLabel="Deficiente" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente10Comen" value="" />
+				        			<p:inputTextarea id="componente10Comen" value="#{encuestaMaestrosMB.componente10Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="11.- En general, el compromiso del estudiante ante su educación es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente11" value="" />
+							        <p:selectOneRadio id="componente11" value="#{encuestaMaestrosMB.componente11}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Muy alto" itemValue="1"/>
+							            <f:selectItem itemLabel="Alto" itemValue="2" />
+							            <f:selectItem itemLabel="Bajo" itemValue="3" />
+							            <f:selectItem itemLabel="Muy bajo" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente11Comen" value="" />
+				        			<p:inputTextarea id="componente11Comen" value="#{encuestaMaestrosMB.componente11Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="12.- La motivación del estudiante por el estudio de las matemáticas es:" />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente12" value="" />
+							        <p:selectOneRadio id="componente12" value="#{encuestaMaestrosMB.componente12}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Muy alto" itemValue="1"/>
+							            <f:selectItem itemLabel="Alto" itemValue="2" />
+							            <f:selectItem itemLabel="Bajo" itemValue="3" />
+							            <f:selectItem itemLabel="Muy bajo" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+						    
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente12Comen" value="" />
+				        			<p:inputTextarea id="componente12Comen" value="#{encuestaMaestrosMB.componente12Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="13.- El factor socioeconómico influye en el aprendizaje de las matemáticas." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente13" value="" />
+							        <p:selectOneRadio id="componente13" value="#{encuestaMaestrosMB.componente13}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Muy alto" itemValue="1"/>
+							            <f:selectItem itemLabel="Alto" itemValue="2" />
+							            <f:selectItem itemLabel="Bajo" itemValue="3" />
+							            <f:selectItem itemLabel="Muy bajo" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente13Comen" value="" />
+				        			<p:inputTextarea id="componente13Comen" value="#{encuestaMaestrosMB.componente13Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+			        <div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="14.- El estudiante sabe en qué otras materias se utilizan las matemáticas." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente14" value="" />
+							        <p:selectOneRadio id="componente14" value="#{encuestaMaestrosMB.componente14}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Muy de acuerdo" itemValue="1"/>
+							            <f:selectItem itemLabel="De acuerdo" itemValue="2" />
+							            <f:selectItem itemLabel="En desacuerdo" itemValue="3" />
+							            <f:selectItem itemLabel="Muy en desacuerdo" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente14Comen" value="" />
+				        			<p:inputTextarea id="componente14Comen" value="#{encuestaMaestrosMB.componente14Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+					<div class="divSeparator"><p:separator/></div>
+					<div>
+				    	<div class="divCuestPregunta">
+						    <h:panelGrid>
+						        <p:outputLabel value="15.- La equidad de género contribuye al desempeño en el área de las matemáticas." />
+						    </h:panelGrid>
+				    	</div>
+				 		<div class="divCuestRespUnica">
+						    
+							    <h:panelGrid columns="5" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente15" value="" />
+							        <p:selectOneRadio id="componente15" value="#{encuestaMaestrosMB.componente15}" layout="grid" columns="1">
+							            <f:selectItem itemLabel="Muy de acuerdo" itemValue="1"/>
+							            <f:selectItem itemLabel="De acuerdo" itemValue="2" />
+							            <f:selectItem itemLabel="En desacuerdo" itemValue="3" />
+							            <f:selectItem itemLabel="Muy en desacuerdo" itemValue="4" />
+							        </p:selectOneRadio>		    
+							    </h:panelGrid>
+				    	</div>
+				    	<div>
+					    	<div class="divCuestRespMult">
+							    <h:panelGrid>
+							        <p:outputLabel value="Comentarios:" />
+							    </h:panelGrid>
+					    	</div>
+					 		<div class="divCuestRespMult">
+							    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+							        <p:outputLabel for="componente15Comen" value="" />
+				        			<p:inputTextarea id="componente15Comen" value="#{encuestaMaestrosMB.componente15Comen}" rows="1" cols="1" queryDelay="1" minQueryLength="0" style="width:300px"/>
+							    </h:panelGrid>
+					    	</div>
+				    	</div>				    	
+				    </div>
+				    <div align="center">
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    	<div class="divSeparatorFinal"><p:separator/></div>
+				    </div>
+				    
+				    <div align="center">
+				    		<p:commandButton id="btnConfirmacionEnviar" value="Enviar" update="msgs" icon="ui-icon-pencil" disabled="#{encuestaMaestrosMB.banEnviar}" actionListener="#{encuestaMaestrosMB.confirmarEncuesta}" />
+				    </div>					
+			        
+		    	</div>
+		    	
+		    	<p:dialog header="Confirmación" widgetVar="dlgEnvEncuestaProfe" minHeight="40" width="500px" resizable="false" modal="true">
+		    		<div align="center">
+		    			<h:panelGrid>
+		    				<p:outputLabel value="¿Está seguro de enviar su encuesta?" />
+		    			</h:panelGrid>
+		    			<h:panelGrid>
+							<p:commandButton id="btnEnviar" value="Confirmar" update="msgs" icon="ui-icon-pencil" actionListener="#{encuestaMaestrosMB.llenarEncuestaMaestro}" disabled="#{encuestaMaestrosMB.banEnviar}"/>
+						</h:panelGrid>
+					</div>	    
+				</p:dialog>
+			</div>	
+		</h:form>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+		      
+	</h:body>
+</html>

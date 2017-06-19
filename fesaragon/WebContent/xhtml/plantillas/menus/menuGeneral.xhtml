@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<h:form>
+		<div align="center">
+			<div align="left" style="width: 980px">	
+				<p:growl id="growl"/>
+				    <p:menubar style="width:968px; height:22px;">
+				    	<p:menuitem value="Inicio" url="/xhtml/compositions/general/welcome.xhtml" icon="ui-icon-home" />
+				    	<p:submenu label="Alumnos">
+			       			<p:menuitem value="Llenar encuesta alumnos" url="/xhtml/compositions/general/encuestas/alumnos/preencuesta.xhtml" icon="ui-icon-pencil" style="font-size: small" />
+			       			<p:menuitem value="Consultar encuesta alumnos" oncomplete="PF('dlg').show();" icon="ui-icon-contact" style="font-size: small" />
+			       		</p:submenu>
+			       		<p:submenu label="Docentes">
+			       			<p:menuitem value="Encuestas" oncomplete="PF('dlg').show();" icon="ui-icon-contact" style="font-size: small" />
+				    	</p:submenu>
+				    </p:menubar>
+				    
+				    <!-- Dialogo para autentificar Usuario -->
+					<p:dialog header="Login" widgetVar="dlg" resizable="false" modal="true">
+				        <h:panelGrid columns="2" cellpadding="5">
+				            <h:outputLabel for="username" value="Username:" />
+				            <p:inputText id="username" value="#{consultarEncuestasMB.username}" required="true" label="username" />
+				 
+				            <h:outputLabel for="password" value="Password:" />
+				            <p:password id="password" value="#{consultarEncuestasMB.password}" required="true" label="password" />	
+				        </h:panelGrid>
+				        
+				        <div id="divDialog" align="center">
+				        <h:panelGrid columns="1" cellpadding="5">
+				            <f:facet name="footer">
+				                <p:commandButton value="Login" update="growl" actionListener="#{consultarEncuestasMB.login}" oncomplete="handleLoginRequest(xhr, status, args)" />
+				            </f:facet>
+					    </h:panelGrid>
+				        </div>
+				    </p:dialog>
+				    
+				</div>	    
+		    </div>
+			<script type="text/javascript">
+		    	function handleLoginRequest(xhr, status, args) {
+			        if(args.validationFailed || !args.loggedIn) {
+			            PF('dlg').jq.effect("shake", {times:5}, 100);
+			        }
+			        else {
+			            PF('dlg').hide();
+			            $('#loginLink').fadeOut();
+			        }
+		    	}
+			</script>    
+	</h:form>
+</html>

@@ -1,0 +1,8 @@
+@CHARSET "ISO-8859-1";
+
+<!-- estilo para pie de Pagina -->
+.piePagina{ height: 40px;
+background-color: #333;
+color: #fff;
+text-align: center;
+clear: both;}

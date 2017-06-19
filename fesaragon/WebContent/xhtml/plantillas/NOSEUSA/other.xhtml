@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+	<h:head>
+		<!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	-->
+		<!--<h:outputStylesheet library="css" name="style.css"  />					-->
+		<!--<h:link href="/css/style.css" rel="stylesheet" type="text/css"/>		-->
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina{ height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px}
+		</style>		
+	</h:head>
+      
+	<h:body>
+		<h:form>
+			<div id="divBanner" align="center">
+				<p:graphicImage url="/images/bannerUNAMFES.jpg"/>
+			</div>
+
+			<div id="divMenu" align="center">
+			    <p:growl id="messages"/>
+			    <p:menubar style="width:968px; height:22px;">
+			 		<p:menuitem value="Iniciar Sesión" url="../../compositions/general/ingresarLogin.xhtml" icon="ui-icon-contact" />
+			        <p:submenu label="Llenar encuesta" icon="ui-icon-pencil">
+	        		    <p:menuitem value="Alumnos" icon="ui-icon-document" />
+			            <p:menuitem value="Profesores" icon="ui-icon-document" />
+	        		</p:submenu>
+			    </p:menubar>
+			</div>
+			
+      		<div id="divMensaje" align="center">
+				<p:growl id="growl" showDetail="true" sticky="true" />   
+			    <p:panel header="Growl">  
+			        <h:panelGrid columns="2" cellpadding="5">  
+			            <p:outputLabel for="msg" value="Message:" />   
+			            <p:inputText id="msg" value="#{preEncuestaAlumnosMB.message}"/>  
+			        </h:panelGrid>  
+			        <p:commandButton value="Save" actionListener="#{preEncuestaAlumnosMB.saveMessage}" update="growl" />  
+			    </p:panel> 	
+			</div>
+			
+			<div id="divDropDown" align="center">
+				<p:outputLabel value="Hola Chata Dayana"></p:outputLabel>
+				<p:growl id="msgs" showDetail="true" />
+				<!--  <p:panel header="Select a Location" style="margin-bottom:10px;"> -->
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="country" value="Country: " />
+			            <p:selectOneMenu id="country" value="#{preEncuestaAlumnosMB.country}" style="width:150px" required="true">
+			                <p:ajax listener="#{preEncuestaAlumnosMB.onCountryChange}" update="city" />
+			                <f:selectItem itemLabel="Select Country" itemValue="" noSelectionOption="true" />
+			                <f:selectItems value="#{preEncuestaAlumnosMB.countries}" />
+			            </p:selectOneMenu>
+			            <p:outputLabel for="city" value="City: " />
+			            <p:selectOneMenu id="city" value="#{preEncuestaAlumnosMB.city}" style="width:150px" required="true"> 
+			                <f:selectItem itemLabel="Select City" itemValue="" noSelectionOption="true" />
+			                <f:selectItems value="#{preEncuestaAlumnosMB.cities}" />
+			            </p:selectOneMenu>
+					</h:panelGrid>  
+					<!--  <p:separator />	-->
+ 					<p:commandButton value="Mostrar" update="msgs" actionListener="#{preEncuestaAlumnosMB.displayLocation}" icon="ui-icon-check" />
+				<!--</p:panel>-->
+			</div>
+			
+			<div id="divFooter" align="center">
+				<ui:insert name="footer">
+					<div class="piePagina">
+						Hecho en México, todos los derechos reservados 2016. Esta página puede ser 
+						reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la 
+						fuente completa y su dirección electrónica. De otra forma requiere permiso 
+						previo por escrito de la institución.
+					</div>					
+				</ui:insert>
+			</div>
+		</h:form>      
+	</h:body>
+
+
+</html>

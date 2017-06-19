@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+	<h:head>
+		<title>40 Aniversario - FES ARAG&Oacute;N</title>
+		<style type="text/css">
+			.piePagina{ height: 40px; background-color: #333; color: #fff; text-align: center; clear: both; width:968px; margin-top: 100px;}
+		</style>
+	</h:head>
+      
+	<h:body>
+		
+		<div id="divBanner" align="center">
+			<ui:include src="/xhtml/plantillas/banner/banner.xhtml" />
+		</div>
+
+		<div id="divMenu" align="center">
+		    <ui:include src="/xhtml/plantillas/menus/menuGeneral.xhtml" />
+		</div>
+		
+		<h:form id="preencuesta" enctype="multipart/form-data">
+			<div align="center"><h6>&nbsp;</h6></div>
+			
+			<div align="center" style="margin-bottom:25px;">
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel style="font-weight:bold; font-size:20px" value="Ingresa los criterios de búsqueda" />
+				</h:panelGrid>
+			</div>
+			
+      		<div align="center">
+      			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+				
+				<h:panelGrid columns="1" cellpadding="5">
+					<p:outputLabel for="nivel" value="Nivel: " />
+		            <p:selectOneMenu id="nivel" value="#{consultarEncuestasMB.nivel}" style="width:200px">
+		                <p:ajax listener="#{consultarEncuestasMB.onNivelChange}" update="campus" />
+		                <p:ajax listener="#{consultarEncuestasMB.onNivelChange}" update="entidad" />
+		                <f:selectItem itemLabel="Seleccionar nivel" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{consultarEncuestasMB.mpCatalogoNivel}" />
+		            </p:selectOneMenu>
+		            
+		            <p:outputLabel for="campus" value="Campus: " />
+		            <p:selectOneMenu id="campus" value="#{consultarEncuestasMB.campus}" style="width:200px">
+		            	<p:ajax listener="#{consultarEncuestasMB.onCampusChange}" update="entidad" />    
+		                <f:selectItem itemLabel="Seleccionar campus" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{consultarEncuestasMB.mpCatalogoCampus}" />
+		            </p:selectOneMenu>
+		            
+		            <p:outputLabel for="entidad" value="Entidad: " />
+		            <p:selectOneMenu id="entidad" value="#{consultarEncuestasMB.entidad}" style="width:200px">    
+		                <f:selectItem itemLabel="Seleccionar entidad" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{consultarEncuestasMB.mpCatalogoEntidad}" />
+		            </p:selectOneMenu>
+		            
+				</h:panelGrid>
+					
+					<!--  <p:separator />	-->
+ 					
+				<!--</p:panel>-->
+			</div>
+			
+			<div align="center">
+				<h:panelGrid columns="1">
+					<p:commandButton value="Consultar" icon="ui-icon-check" onclick="PF('dlg').show();"/>    
+				</h:panelGrid>
+			</div>
+			
+			<!-- Dialogo para autentificar Usuario -->
+			<p:dialog header="Login" widgetVar="dlg" resizable="false">
+		        <h:panelGrid columns="2" cellpadding="5">
+		            <h:outputLabel for="username" value="Username:" />
+		            <p:inputText id="username" value="#{consultarEncuestasMB.username}" required="true" label="username" />
+		 
+		            <h:outputLabel for="password" value="Password:" />
+		            <p:password id="password" value="#{consultarEncuestasMB.password}" required="true" label="password" />	
+		        </h:panelGrid>
+		        
+		        <div id="divDialog" align="center">
+		        <h:panelGrid columns="1" cellpadding="5">
+		            <f:facet name="footer">
+		                <p:commandButton value="Login" update="growl" actionListener="#{consultarEncuestasMB.login}" oncomplete="handleLoginRequest(xhr, status, args)" />
+		            </f:facet>
+			    </h:panelGrid>
+		        </div>
+		    </p:dialog>
+		</h:form>
+			
+		<div id="divFooter" align="center">
+			<ui:include src="/xhtml/plantillas/footers/footer.xhtml" />
+		</div>
+	      
+		<script type="text/javascript">
+	    function handleLoginRequest(xhr, status, args) {
+	        if(args.validationFailed || !args.loggedIn) {
+	            PF('dlg').jq.effect("shake", {times:5}, 100);
+	        }
+	        else {
+	            PF('dlg').hide();
+	            $('#loginLink').fadeOut();
+	        }
+	    }
+		</script>
+	</h:body>
+</html>
